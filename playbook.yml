@@ -65,8 +65,9 @@
 
     - name: Fail properly
       block:
-        fail:
-          msg: 'Testing failure'
+        - name: force failure
+          mail:
+            msg: 'Testing failure'
       rescue:
         - dci_job:
             dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
