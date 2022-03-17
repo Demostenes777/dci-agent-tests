@@ -49,7 +49,7 @@
     dci_comment: 'Executing tests'
     job_id: "{{ job_info['job']['id'] }}"
   tasks:
-    - block:
+    block:
       - name: Upload junit results
         dci_file:
           path: '{{ item.path }}'
