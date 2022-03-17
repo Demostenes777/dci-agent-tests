@@ -23,63 +23,47 @@
       debug:
         var: job_info
 
-    - name: Pause - Please check that a new job has been created
-      pause:
-        seconds: 15
+---
+- hosts: localhost
+  vars:
+    dci_status: 'pre-run'
+    dci_comment: 'Making preparations'
+    job_id: "{{ job_info['job_id'] }}"
+  tasks:
+    - name: Changing the status of the job to pre-run
+      debug:
+        msg: "The job has changed to pre-run state"
 
-    - name: Set job state to pre-run
-      dci_job:
-        status: pre-run
-        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
-        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
-        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
-        id: "{{ job_info['job']['id'] }}"
+---
+- hosts: localhost
+  vars:
+    dci_status: 'running'
+    dci_comment: 'Running'
+    job_id: "{{ job_info['job_id'] }}"
+  tasks:
+    - name: Changing the status of the job to running
+      debug:
+        msg: "The job has changed to running state"
 
-    - name: Pause - Please check that the job status has changed to pre-running
-      pause:
-        seconds: 15
+---
+- hosts: localhost
+  vars:
+    dci_status: 'post-run'
+    dci_comment: 'Executing tests'
+    job_id: "{{ job_info['job_id'] }}"
+  tasks:
+    - name: Changing the status of the job to post-run
+      debug:
+        msg: "The job has changed to post-run state"
 
-    - name: Set job state to running
-      dci_job:
-        status: running
-        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
-        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
-        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
-        id: "{{ job_info['job']['id'] }}"
+---
+- hosts: localhost
+  vars:
+    dci_status: 'success'
+    dci_comment: 'Finished job'
+    job_id: "{{ job_info['job_id'] }}"
+  tasks:
+    - name: Changing the status of the job to success
+      debug:
+        msg: "The job has changed to success state"
 
-    - name: Pause - Please check that the job status has changed to running
-      pause:
-        seconds: 15
-
-    - name: Set job state to post-run
-      dci_job:
-        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
-        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
-        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
-        status: post-run
-        id: "{{ job_info['job']['id'] }}"
-
-    - name: Pause - Please check that the job status has changed to post run
-      pause:
-        seconds: 15
-
-    - name: Fail properly
-      block:
-        - name: force failure
-          mail:
-            msg: 'Testing failure'
-      rescue:
-        - dci_job:
-            dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
-            dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
-            dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
-            status: failure
-            id: "{{ job_info['job']['id'] }}"
-
-    - name: Set job state to running
-      dci_job:
-        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
-        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
-        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
-        status: success
-        id: "{{ job_info['job']['id'] }}"
