@@ -49,9 +49,23 @@
     dci_comment: 'Executing tests'
     job_id: "{{ job_info['job_id'] }}"
   tasks:
-    - name: Changing the status of the job to post-run
-      debug:
-        msg: "The job has changed to post-run state"
+    - block:
+      - name: Upload junit results
+        dci_file:
+          path: '{{ item.path }}'
+          name: '{{ item.name }}'
+          mime: 'application/junit'
+          job_id: '{{ job_id }}'
+        with_items:
+          - { 'name': 'Sample document', 'path': 'sample.xml' }
+
+    rescue:
+      - name: Tear me down
+        shell: echo 'Tear me down'
+
+      - name: Fail properly
+        fail:
+          msg: 'Something went wrong with the installation'
 
 - hosts: localhost
   vars:
