@@ -23,7 +23,6 @@
       debug:
         var: job_info
 
----
 - hosts: localhost
   vars:
     dci_status: 'pre-run'
@@ -34,7 +33,6 @@
       debug:
         msg: "The job has changed to pre-run state"
 
----
 - hosts: localhost
   vars:
     dci_status: 'running'
@@ -45,7 +43,6 @@
       debug:
         msg: "The job has changed to running state"
 
----
 - hosts: localhost
   vars:
     dci_status: 'post-run'
@@ -56,7 +53,6 @@
       debug:
         msg: "The job has changed to post-run state"
 
----
 - hosts: localhost
   vars:
     dci_status: 'success'
