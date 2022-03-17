@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+  tasks:
+    - name: List all RemoteCIs
+      dci_remoteci:
