@@ -70,15 +70,3 @@
         dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
         status: success
         id: "{{ job_info['job']['id'] }}"
-
-    - name: Pause - Please check that the job has finished succesfully
-      pause:
-        seconds: 15
-
-    - name: Remove a job
-      dci_job:
-        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
-        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
-        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
-        state: absent
-        id: "{{ job_info['job']['id'] }}"
