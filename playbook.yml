@@ -19,15 +19,15 @@
         dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
       register: job_info
 
-    - name: Show Remote CI information
+    - name: Show Job ID
       debug:
-        var: job_info
+        var: job_info['job']['id]
 
 - hosts: localhost
   vars:
     dci_status: 'pre-run'
     dci_comment: 'Making preparations'
-    job_id: "{{ job_info['job_id'] }}"
+    job_id: "{{ job_info['job']['id'] }}"
   tasks:
     - name: Changing the status of the job to pre-run
       debug:
@@ -37,7 +37,7 @@
   vars:
     dci_status: 'running'
     dci_comment: 'Running'
-    job_id: "{{ job_info['job_id'] }}"
+    job_id: "{{ job_info['job']['id'] }}"
   tasks:
     - name: Changing the status of the job to running
       debug:
@@ -47,7 +47,7 @@
   vars:
     dci_status: 'post-run'
     dci_comment: 'Executing tests'
-    job_id: "{{ job_info['job_id'] }}"
+    job_id: "{{ job_info['job']['id'] }}"
   tasks:
     - block:
       - name: Upload junit results
@@ -55,7 +55,7 @@
           path: '{{ item.path }}'
           name: '{{ item.name }}'
           mime: 'application/junit'
-          job_id: '{{ job_id }}'
+          job_id: "{{ job_info['job']['id'] }}"
         with_items:
           - { 'name': 'Sample document', 'path': 'sample.xml' }
 
@@ -71,7 +71,7 @@
   vars:
     dci_status: 'success'
     dci_comment: 'Finished job'
-    job_id: "{{ job_info['job_id'] }}"
+    job_id: "{{ job_info['job']['id'] }}"
   tasks:
     - name: Changing the status of the job to success
       debug:
