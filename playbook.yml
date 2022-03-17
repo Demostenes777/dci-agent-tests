@@ -21,7 +21,7 @@
 
     - name: Show Job ID
       debug:
-        var: job_info['job']['id]
+        var: job_info['job']['id']
 
 - hosts: localhost
   vars:
@@ -46,7 +46,7 @@
 - hosts: localhost
   vars:
     dci_status: 'post-run'
-    dci_comment: 'Executing tests'
+    dci_comment: 'Running tests'
     job_id: "{{ job_info['job']['id'] }}"
   tasks:
     block:
@@ -58,7 +58,6 @@
           job_id: "{{ job_info['job']['id'] }}"
         with_items:
           - { 'name': 'Sample document', 'path': 'sample.xml' }
-
     rescue:
       - name: Tear me down
         shell: echo 'Tear me down'
