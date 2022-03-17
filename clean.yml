@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Remove a job
+      dci_job:
+        state: absent
+        id: "{{ job_info['job']['id'] }}"
