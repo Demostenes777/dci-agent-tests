@@ -1,5 +1,11 @@
 ---
 - hosts: localhost
   tasks:
-    - name: List all RemoteCIs
+    - name: Get Remote CI information
       dci_remoteci:
+        id: "{{ lookup('env', 'DCI_CLIENT_ID').split('/')[0]}}"
+      register: remote_ci
+
+    - name: Show Remote CI information
+      debug:
+        var: remote_ci
