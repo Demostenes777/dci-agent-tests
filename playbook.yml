@@ -30,6 +30,9 @@
     - name: Set job state to pre-run
       dci_job:
         state: pre-run
+        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
+        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
+        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
         id: "{{ job_info['job']['id'] }}"
 
     - name: Pause - Please check that the job status has changed to pre-running
@@ -39,6 +42,9 @@
     - name: Set job state to running
       dci_job:
         state: running
+        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
+        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
+        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
         id: "{{ job_info['job']['id'] }}"
 
     - name: Pause - Please check that the job status has changed to running
@@ -47,6 +53,9 @@
 
     - name: Set job state to post-run
       dci_job:
+        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
+        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
+        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
         state: post-run
         id: "{{ job_info['job']['id'] }}"
 
@@ -56,6 +65,9 @@
 
     - name: Set job state to running
       dci_job:
+        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
+        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
+        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
         state: success
         id: "{{ job_info['job']['id'] }}"
 
@@ -65,5 +77,8 @@
 
     - name: Remove a job
       dci_job:
+        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
+        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
+        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
         state: absent
         id: "{{ job_info['job']['id'] }}"
