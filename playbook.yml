@@ -63,6 +63,10 @@
       pause:
         seconds: 15
 
+    - name: Fail properly
+      fail:
+        msg: 'Testing failure'
+
     - name: Set job state to running
       dci_job:
         dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
