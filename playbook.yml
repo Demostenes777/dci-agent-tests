@@ -28,9 +28,9 @@
         seconds: 15
 
     - name: Set job state to pre-run
-        dci_job:
-          state: pre-run
-          id: "{{ job_info['job']['id'] }}"
+      dci_job:
+        state: pre-run
+        id: "{{ job_info['job']['id'] }}"
 
     - name: Pause - Please check that the job status has changed to pre-running
       pause:
