@@ -58,7 +58,7 @@
             mime: 'application/junit'
             job_id: "{{ job_info.job.id }}"
           with_items:
-            - { 'name': 'Sample document', 'path': 'sample.xml' }
+            - { 'name': 'Sample document', 'path': 'sample.xls' }
       rescue:
         - name: Tear me down
           shell: echo 'Tear me down'
