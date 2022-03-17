@@ -11,35 +11,35 @@
         var: remote_ci
 
     - name: Schedule a new job
-        dci_job:
-          name: 'rhocp-jnpr-{{ ansible_date_time.iso8601 }}'
-          topic: 'OCP-4.10'
-          dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
-          dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
-          dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
-        register: job_info
+      dci_job:
+        name: 'rhocp-jnpr-{{ ansible_date_time.iso8601 }}'
+        topic: 'OCP-4.10'
+        dci_client_id: "{{ lookup('env', 'DCI_CLIENT_ID') }}"
+        dci_api_secret: "{{ lookup('env', 'DCI_API_SECRET') }}"
+        dci_cs_url: "{{ lookup('env', 'DCI_CS_URL') }}"
+      register: job_info
 
     - name: Show Remote CI information
-        debug:
-          var: job_info
+      debug:
+        var: job_info
 
     - name: Pause - Please check that a new job has been created
       pause:
         seconds: 30
 
     - name: Pause - Please check that the job status has changed
-        pause:
-          seconds: 30
+      pause:
+        seconds: 30
 
     - name: Pause - Please check that the job has finished
-        pause:
-          seconds: 30
+      pause:
+        seconds: 30
 
     - name: Remove a job
-        dci_job:
-          state: absent
-          id: "{{ job_info['job']['id'] }}"
+      dci_job:
+        state: absent
+        id: "{{ job_info['job']['id'] }}"
 
     - name: Pause - Please check that the job has been removed
-        pause:
-          seconds: 30
+      pause:
+        seconds: 30
