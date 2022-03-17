@@ -25,21 +25,45 @@
 
     - name: Pause - Please check that a new job has been created
       pause:
-        seconds: 30
+        seconds: 15
 
-    - name: Pause - Please check that the job status has changed
-      pause:
-        seconds: 30
+    - name: Set job state to pre-run
+        dci_job:
+          state: pre-run
+          id: "{{ job_info['job']['id'] }}"
 
-    - name: Pause - Please check that the job has finished
+    - name: Pause - Please check that the job status has changed to pre-running
       pause:
-        seconds: 30
+        seconds: 15
+
+    - name: Set job state to running
+      dci_job:
+        state: running
+        id: "{{ job_info['job']['id'] }}"
+
+    - name: Pause - Please check that the job status has changed to running
+      pause:
+        seconds: 15
+
+    - name: Set job state to post-run
+      dci_job:
+        state: post-run
+        id: "{{ job_info['job']['id'] }}"
+
+    - name: Pause - Please check that the job status has changed to post run
+      pause:
+        seconds: 15
+
+    - name: Set job state to running
+      dci_job:
+        state: success
+        id: "{{ job_info['job']['id'] }}"
+
+    - name: Pause - Please check that the job has finished succesfully
+      pause:
+        seconds: 15
 
     - name: Remove a job
       dci_job:
         state: absent
         id: "{{ job_info['job']['id'] }}"
-
-    - name: Pause - Please check that the job has been removed
-      pause:
-        seconds: 30
